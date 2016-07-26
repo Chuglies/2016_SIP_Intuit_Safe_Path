@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+      <meta charset="utf-8">
+      <style>
+       #map {
+        width: 100%;
+        height: 600px;
+      }
+      </style>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+      <title>Google Maps Multiple Markers</title> 
+      <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>  
+    
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var locations = [[ "Auto Boost/Strip", 37.772773, -122.4253443], 
+        ["Burglary",37.8053186, -122.4384514], ["Person With Gun",37.7344269, -122.488979], 
+        ["Burglary", 37.7505102, -122.4340278], ["Drunk Driver", 37.751977, -122.4364002]];
+      
+        var myLatLng = {lat: -25.363, lng: 131.044};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: new google.maps.LatLng(37.7749, -122.4364002),
+          mapTypeId: google.maps.MapTypeId.MAP
+          
+        });
+        
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+        
+         var burglary = 'burglary_icon.png'
+         var assault = 'assault.png'
+         var theft = 'theft.png'
+         var drunk = 'drunk2.png'
+         var gun = 'gun2.png'
+         
+        for (i = 0; i < locations.length; i++) {  
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+            map: map, 
+            
+            
+            if (location[i][0] == "Auto Boost/Strip") {
+            	icon: theft
+            }
+            else if (location[i][0] == "Person With Gun") {
+            	icon: gun
+            }
+            else if (location[i][0] == "Drunk Driver") {
+            	icon: drunk
+            }
+            else if (location[i][0] == "Burglary") {
+            	icon: burglary
+            }
+            else {
+            	icon: assault
+            }
+            
+          });
+          google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+              infowindow.setContent(locations[i][0]);
+              infowindow.open(map, marker);
+            }
+          })(marker, i));              
+        }
+     
+      }
+    </script>
+    <script 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7d1aWB8cwFPESkkY3XMDFwG0by3kZSsY&callback=initMap" async defer>
+    </script>
+  </body>
+</html>
